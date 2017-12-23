@@ -111,6 +111,12 @@ int main(void)
     /*set_style(ctx, THEME_DARK);*/
 
     background = nk_rgb(28,48,62);
+
+    struct nk_text_edit text_edit;
+    nk_textedit_init_default(&text_edit);
+
+    char text_buf[256] = { 0 };
+
     while (!glfwWindowShouldClose(win))
     {
         /* Input */
@@ -149,6 +155,10 @@ int main(void)
                 background.a = (nk_byte)nk_propertyi(ctx, "#A:", 0, background.a, 255, 1,1);
                 nk_combo_end(ctx);
             }
+            nk_layout_row_dynamic(ctx, 25, 1);
+            nk_edit_buffer(ctx, NK_EDIT_SIMPLE, &text_edit, nk_filter_default);
+            nk_layout_row_dynamic(ctx, 25, 1);
+            nk_edit_string_zero_terminated(ctx, NK_EDIT_SIMPLE, text_buf, 256, nk_filter_default);
         }
         nk_end(ctx);
 
@@ -177,4 +187,3 @@ int main(void)
     glfwTerminate();
     return 0;
 }
-
